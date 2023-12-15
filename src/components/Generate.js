@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Loading from "./Loading";
 
 function Generate() {
   const [response, setResponse] = useState("");
@@ -11,10 +12,12 @@ function Generate() {
   const [technologies, setTechnologies] = useState("");
   const [background, setBackground] = useState("");
   const [extra, setExtra] = useState("");
+  const [waiting, setWiting] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("submitted");
+    setWiting(true);
   };
 
   const handleOpenAIRequest = async () => {
@@ -78,66 +81,111 @@ function Generate() {
   };
 
   return (
-    <div>
-      <div>
-        <form className="flex flex-col" onSubmit={handleSubmit}>
-          <label>Enter your name:</label>
-          <input
-            type="text"
-            name="name"
-            value={name}
-            onChange={handleInputChange}
-          />
-          <label>Enter the company's name</label>
-          <input
-            type="text"
-            name="company"
-            value={company}
-            onChange={handleInputChange}
-          />
-          <label>Enter the company's industry</label>
-          <input
-            type="text"
-            name="industry"
-            value={industry}
-            onChange={handleInputChange}
-          />
-          <label>Enter the position you are applying for</label>
-          <input
-            type="text"
-            name="position"
-            value={position}
-            onChange={handleInputChange}
-          />
-          <label>Enter your skills</label>
-          <textarea
-            type="text"
-            name="technologies"
-            value={technologies}
-            onChange={handleInputChange}
-          />
-          <label>Enter your previous expreince and explain them in short</label>
-          <textarea
-            type="text"
-            name="background"
-            value={background}
-            onChange={handleInputChange}
-          />
-          <label>Anything you want to add extra</label>
-          <textarea
-            type="text"
-            name="extra"
-            value={extra}
-            onChange={handleInputChange}
-          />
-          <button onClick={handleOpenAIRequest} onSubmit={handleSubmit}>
-            Make OpenAI Request
-          </button>
-        </form>
-      </div>
-
-      <p>OpenAI Response: {response}</p>
-    </div>
+    <>
+      {!waiting ? (
+        <>
+          <div className="min-h-screen bg-[#ddd0fd] p-0 sm:p-12">
+            <div className="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
+              <h1 className="text-2xl font-bold mb-8" id="benim">
+                Cover Letter Generator
+              </h1>
+              <form className="flex flex-col" onSubmit={handleSubmit}>
+                <div className="flex flex-col w-full">
+                  <div className="relative z-0 w-full mb-5">
+                    <label>Your Name:</label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={name}
+                      onChange={handleInputChange}
+                      className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+                    />
+                  </div>
+                  <div className="relative z-0 w-full mb-5">
+                    <label>Company's Name:</label>
+                    <input
+                      type="text"
+                      name="company"
+                      value={company}
+                      onChange={handleInputChange}
+                      className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+                    />
+                  </div>
+                  <div className="relative z-0 w-full mb-5">
+                    <label>Company's Industry:</label>
+                    <input
+                      type="text"
+                      name="industry"
+                      value={industry}
+                      onChange={handleInputChange}
+                      className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+                    />
+                  </div>
+                  <div className="relative z-0 w-full mb-5">
+                    <label>The Position You're Applying For:</label>
+                    <input
+                      type="text"
+                      name="position"
+                      value={position}
+                      onChange={handleInputChange}
+                      className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+                    />
+                  </div>
+                  <div className="relative z-0 w-full mb-5">
+                    <label>Enter your skills:</label>
+                    <textarea
+                      type="text"
+                      name="technologies"
+                      value={technologies}
+                      onChange={handleInputChange}
+                      className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+                    />
+                  </div>
+                  <div className="relative z-0 w-full mb-5">
+                    <label>
+                      Enter your previous expreince and explain them in short
+                    </label>
+                    <textarea
+                      type="text"
+                      name="background"
+                      value={background}
+                      onChange={handleInputChange}
+                      className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+                    />
+                  </div>
+                  <div className="relative z-0 w-full mb-5">
+                    <label>Anything you want to add extra</label>
+                    <textarea
+                      type="text"
+                      name="extra"
+                      value={extra}
+                      onChange={handleInputChange}
+                      className="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+                    />
+                  </div>
+                  <button
+                    onClick={handleOpenAIRequest}
+                    className="w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-[#562fbb] hover:bg-[#2a1c4e] hover:shadow-lg focus:outline-none"
+                  >
+                    Generate Cover Letter
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div>
+          {!response ? (
+            <div className="loadingScreen">
+              <Loading />{" "}
+            </div>
+          ) : (
+            <>{response}</>
+          )}
+        </div>
+      )}
+    </>
   );
 }
 
