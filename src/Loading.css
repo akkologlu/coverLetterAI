@@ -12,8 +12,7 @@
   font-size: calc(16px + (20 - 16) * (100vw - 320px) / (1280 - 320));
 }
 .loadingScreen {
-  background-color: var(--bg);
-  color: var(--fg);
+  background-color: #ddd0fd;
   font: 1em/1.5 "Varela Round", sans-serif;
   height: 100vh;
   display: grid;

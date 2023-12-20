@@ -30,7 +30,7 @@ function Generate() {
           {
             role: "system",
             content:
-              "You are a cover letter writer who specializes in writing cover letters for candidates who will apply for a job or internship. But do not write it like a regular cover letter. Start the letter directly with dear. Write it without including the previous date, name, address and parts like that.",
+              "You are a cover letter writer who specializes in writing cover letters for candidates who will apply for a job or internship. But do not write it like a regular cover letter. Start the letter directly with dear. Write it without including the previous date, name, address and parts like that. Do not enter the sincerly part at the end.",
           },
           {
             role: "user",
@@ -79,7 +79,16 @@ function Generate() {
         break;
     }
   };
-
+  function formatDate(timestamp) {
+    const date = new Date(timestamp);
+    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+    const formattedDate = new Intl.DateTimeFormat("tr-TR", options).format(
+      date
+    );
+    return formattedDate;
+  }
+  const now = Date.now();
+  const formattedDate = formatDate(now);
   return (
     <>
       {!waiting ? (
@@ -181,7 +190,26 @@ function Generate() {
               <Loading />{" "}
             </div>
           ) : (
-            <>{response}</>
+            <>
+              <div className="flex items-center justify-center min-h-screen bg-[#ddd0fd]">
+                <div className=" bg-white border border-gray-300 rounded p-8 shadow-md max-w-xl w-full my-12">
+                  <div className=" flex justify-between mb-4">
+                    <div className=" font-bold">Sender: {name}</div>
+                    <div>Date: {formattedDate}</div>
+                  </div>
+                  <div className=" text-base leading-6">
+                    <p>{response}</p>
+                  </div>
+                  <div className=" mt-4 italic">
+                    <p>
+                      Sincerely,
+                      <br />
+                      {name}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </>
           )}
         </div>
       )}
